@@ -7,7 +7,7 @@ import { ChatMessage as ChatMessageComponent } from "@/components/ChatMessage";
 const INITIAL_MESSAGE: ChatMessage = {
   role: "assistant",
   content:
-    "Hi! I can help you find housing by time to campus. Try asking: \"Find me a place under 30 mins from Markham campus\" or \"Show me rentals under 25 minutes to Keele\".",
+    "Hi! I can help you find housing by time to campus. Try asking: \"Find me a place under 30 mins from Markham campus\", \"Show me rentals under 25 minutes to Keele\", or \"What's near Glendon under 20 mins?\".",
 };
 
 export default function ChatPage() {
@@ -52,7 +52,7 @@ export default function ChatPage() {
         className="animate-fade-in-up mb-6 text-2xl font-bold text-gray-900 opacity-0"
         style={{ animationDelay: "0ms" }}
       >
-        Housing assistant
+        Right On Stop Assistant
       </h1>
 
       <div

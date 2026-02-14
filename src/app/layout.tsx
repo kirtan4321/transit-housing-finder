@@ -4,9 +4,9 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "York Housing Finder | Transit-Oriented Rentals",
+  title: "Right On Stop | Transit-Oriented Rentals",
   description:
-    "Find housing by time to York University Keele & Markham campuses. Search by transit time, safety, and reliability.",
+    "Right On Stop — find housing by time to York University Keele, Markham & Glendon campuses. Search by transit time, safety, and reliability.",
 };
 
 export default function RootLayout({

@@ -11,6 +11,8 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "york-red": "#A32036",
+        "york-blue": "#003B5C",
       },
       keyframes: {
         "fade-in-up": {

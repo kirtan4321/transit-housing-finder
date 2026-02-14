@@ -1,4 +1,4 @@
-import type { TravelData } from "./openrouteservice";
+import type { TravelData } from "./travel-types";
 
 const travelCache = new Map<string, TravelData>();
 

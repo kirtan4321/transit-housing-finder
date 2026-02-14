@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getListing } from "@/data/listings";
-import { ListingMap } from "@/components/ListingMap";
+import { ListingMapWithRoute } from "@/components/ListingMapWithRoute";
 
 type ListingPageProps = {
   params: Promise<{ id: string }>;
@@ -37,12 +37,20 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
 
       {listing.lat != null && listing.lng != null && (
         <section className="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <ListingMap
+          <ListingMapWithRoute
             lat={listing.lat}
             lng={listing.lng}
             closestBusStopName={listing.closest_bus_stop}
             closestBusStopLat={listing.closest_bus_stop_lat}
             closestBusStopLng={listing.closest_bus_stop_lng}
+
+            transitLinesToKeele={listing.transit_lines_to_keele}
+            transitLinesToMarkham={listing.transit_lines_to_markham}
+            transitLinesToGlendon={listing.transit_lines_to_glendon}
+
+            minutesToKeele={listing.minutes_to_keele}
+            minutesToMarkham={listing.minutes_to_markham}
+            minutesToGlendon={listing.minutes_to_glendon}
           />
         </section>
       )}
@@ -55,20 +63,59 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
           Time to campus
         </h2>
         <p className="mb-2 text-sm text-gray-600">
-          Commute time from listing to campus using public transit.
+          Transit time from listing to campus (Geoapify).
         </p>
         <ul className="space-y-2 text-gray-700">
           <li>
             <strong>{listing.minutes_to_keele} min</strong> to Keele Campus
+            {listing.transit_lines_to_keele.length > 0 && (
+              <span className="ml-2 text-sm text-gray-600">
+                ({listing.transit_lines_to_keele.join(", ")})
+              </span>
+            )}
+          </li>
+          <li>
+            <strong>{listing.minutes_to_glendon} min</strong> to Glendon Campus
+            {listing.transit_lines_to_glendon.length > 0 && (
+              <span className="ml-2 text-sm text-gray-600">
+                ({listing.transit_lines_to_glendon.join(", ")})
+              </span>
+            )}
           </li>
           <li>
             <strong>{listing.minutes_to_markham} min</strong> to Markham Campus
+            {listing.transit_lines_to_markham.length > 0 && (
+              <span className="ml-2 text-sm text-gray-600">
+                ({listing.transit_lines_to_markham.join(", ")})
+              </span>
+            )}
           </li>
         </ul>
         <p className="mt-3 text-sm text-gray-600">
           {listing.primary_route_summary}
         </p>
       </section>
+
+      {listing.closest_bus_stop && (
+        <section
+          className="animate-fade-in-up mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm opacity-0"
+          style={{ animationDelay: "300ms" }}
+        >
+          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+            Closest bus stop
+          </h2>
+          <p className="text-gray-700 font-medium">{listing.closest_bus_stop}</p>
+          {listing.closest_bus_stop_distance_m != null && (
+            <p className="mt-1 text-sm text-gray-600">
+              {listing.closest_bus_stop_distance_m < 1000
+                ? `${Math.round(listing.closest_bus_stop_distance_m)} m away`
+                : `${(listing.closest_bus_stop_distance_m / 1000).toFixed(1)} km away`}
+              {" "}
+              ({Math.round(listing.closest_bus_stop_distance_m / 80)} min walk)
+            </p>
+          )}
+        </section>
+      )}
 
       <section
         className="animate-fade-in-up mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm opacity-0"

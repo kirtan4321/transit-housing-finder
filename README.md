@@ -1,6 +1,6 @@
-# York Housing Finder
+# Right On Stop
 
-Transit-oriented housing finder for York University students (Keele & Markham campuses). Search by **time to campus** instead of distance, with safety and reliability scores.
+Transit-oriented housing finder for York University students (Keele, Markham & Glendon campuses). Search by **time to campus** instead of distance, with safety and reliability scores.
 
 ## Features
 
@@ -13,8 +13,9 @@ Transit-oriented housing finder for York University students (Keele & Markham ca
 
 - Next.js 14 (App Router), TypeScript, Tailwind CSS
 - In-code listing data (no database required)
-- **OpenRouteService** for dynamic travel times (driving) and nearest bus stop (POIs)
-- **Leaflet** for map display (listing + closest bus stop)
+- **Geoapify Routing API** (transit mode) for travel time to campus, bus/train line names, and route geometry
+- **Leaflet** for map display (listing, closest bus stop, and transit route line)
+- **OpenRouteService** (optional) for nearest bus stop POI
 - OpenAI (gpt-4o-mini) for the chat assistant
 
 ## Getting started
@@ -36,7 +37,8 @@ cp .env.example .env.local
 Edit `.env.local` and set:
 
 - `OPENAI_API_KEY` — from [OpenAI](https://platform.openai.com) (required for Chat)
-- `OPENROUTESERVICE_API_KEY` — from [OpenRouteService](https://openrouteservice.org/dev/#/signup) (required for travel times and closest bus stop; without it, travel data will show as 999 min and no bus stop)
+- `GEOAPIFY_API_KEY` — from [Geoapify](https://www.geoapify.com/) (required for transit routes, times, and map geometry; without it, fallback minutes are used and no route is drawn)
+- `OPENROUTESERVICE_API_KEY` — optional, for closest bus stop; from [OpenRouteService](https://openrouteservice.org/dev/#/signup)
 
 ### 3. Run the dev server
 

@@ -4,7 +4,7 @@ import { ListingCard } from "./ListingCard";
 
 type ResultsListProps = {
   listings: Listing[];
-  campus: "keele" | "markham";
+  campus: "keele" | "markham" | "glendon";
 };
 
 export function ResultsList({ listings, campus }: ResultsListProps) {

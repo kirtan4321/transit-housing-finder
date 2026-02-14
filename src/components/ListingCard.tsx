@@ -1,45 +1,90 @@
+import Image from "next/image";
 import type { Listing } from "@/data/listings";
+
+const LISTING_IMAGES = [
+  "/living-room-1.jpg",
+  "/living-room-2.jpg",
+  "/living-room-3.jpg",
+  "/living-room-4.jpg",
+];
+
+/** Derive a short frequency label from the frequency_summary string. */
+function getFrequencyLabel(summary: string): string {
+  const match = summary.match(/every\s*~?\s*(\d+)/);
+  if (!match) return summary;
+  const interval = parseInt(match[1], 10);
+  if (interval <= 10) return "Frequent Service";
+  if (interval <= 15) return "Regular Service";
+  return "Limited Service";
+}
 
 type ListingCardProps = {
   listing: Listing;
-  campus: "keele" | "markham";
+  campus: "keele" | "markham" | "glendon";
 };
 
 export function ListingCard({ listing, campus }: ListingCardProps) {
   const minutes =
-    campus === "keele" ? listing.minutes_to_keele : listing.minutes_to_markham;
-  const campusLabel = campus === "keele" ? "Keele" : "Markham";
+    campus === "keele"
+      ? listing.minutes_to_keele
+      : campus === "markham"
+        ? listing.minutes_to_markham
+        : listing.minutes_to_glendon;
+  const campusLabel =
+    campus === "keele" ? "Keele" : campus === "markham" ? "Markham" : "Glendon";
+
+  // Rotate among the 4 listing images based on the listing id
+  const imageIndex = (parseInt(listing.id, 10) - 1) % LISTING_IMAGES.length;
+  const imageSrc = LISTING_IMAGES[imageIndex >= 0 ? imageIndex : 0];
+
+  const frequencyLabel = getFrequencyLabel(listing.frequency_summary);
 
   return (
-    <article className="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-[0.99] active:border-york-red/50 active:bg-york-red/5">
-      <h2 className="mb-1 font-semibold text-gray-900">{listing.address}</h2>
-      <p className="mb-2 text-sm text-gray-500">{listing.area_name}</p>
-      <p className="mb-3 text-lg font-semibold text-red-700">
-        ${listing.rent.toLocaleString()}/mo
-      </p>
-      <p className="mb-3 text-sm text-gray-700">
-        <span className="font-medium">{minutes} min</span> to {campusLabel}
-      </p>
-      <div className="mt-auto flex flex-wrap gap-2">
-        <span
-          className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800"
-          title={`Safety: ${listing.safety_label}`}
-        >
-          Safety {listing.safety_score}/5
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl active:scale-[0.99]">
+      {/* Image with transit-time overlay */}
+      <div className="relative h-48 w-full flex-shrink-0">
+        <Image
+          src={imageSrc}
+          alt={listing.address}
+          fill
+          className="object-cover"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
+        <span className="absolute left-3 top-3 rounded-full bg-blue-500 px-3.5 py-1 text-sm font-semibold text-white shadow-lg">
+          {minutes} mins to {campusLabel}
         </span>
-        <span
-          className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"
-          title={listing.frequency_summary}
-        >
-          Rel. {listing.reliability_score}/5
-        </span>
-        {listing.closest_bus_stop && (
+      </div>
+
+      {/* Card body */}
+      <div className="flex flex-1 flex-col px-4 pb-4 pt-3">
+        {/* Price & rating row */}
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-lg font-bold text-gray-900">
+            ${listing.rent.toLocaleString()} / month
+          </p>
+          <div className="flex items-center gap-1">
+            <span className="text-lg text-amber-400">&#9733;</span>
+            <span className="text-sm font-semibold text-gray-800">
+              {listing.safety_score}/5
+            </span>
+          </div>
+        </div>
+
+        {/* Frequency badge */}
+        <div className="mb-2">
           <span
-            className="inline-flex max-w-[140px] shrink rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800"
-            title={`Nearest bus stop: ${listing.closest_bus_stop}`}
+            className="inline-block rounded-full bg-gray-900 px-3 py-1 text-xs font-medium text-white"
+            title={listing.frequency_summary}
           >
-            <span className="truncate">Stop: {listing.closest_bus_stop}</span>
+            {frequencyLabel}
           </span>
+        </div>
+
+        {/* Nearest stop */}
+        {listing.closest_bus_stop && (
+          <p className="mt-auto text-sm text-gray-600">
+            Nearest Stop: {listing.closest_bus_stop}
+          </p>
         )}
       </div>
     </article>

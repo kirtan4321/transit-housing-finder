@@ -6,6 +6,7 @@ import { useState } from "react";
 const CAMPUS_OPTIONS = [
   { value: "keele", label: "Keele Campus" },
   { value: "markham", label: "Markham Campus" },
+  { value: "glendon", label: "Glendon Campus" },
 ] as const;
 
 const MAX_MINUTES_OPTIONS = [15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
