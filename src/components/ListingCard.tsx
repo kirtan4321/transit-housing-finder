@@ -11,7 +11,7 @@ export function ListingCard({ listing, campus }: ListingCardProps) {
   const campusLabel = campus === "keele" ? "Keele" : "Markham";
 
   return (
-    <article className="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+    <article className="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-[0.99] active:border-york-red/50 active:bg-york-red/5">
       <h2 className="mb-1 font-semibold text-gray-900">{listing.address}</h2>
       <p className="mb-2 text-sm text-gray-500">{listing.area_name}</p>
       <p className="mb-3 text-lg font-semibold text-red-700">

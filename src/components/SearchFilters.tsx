@@ -39,7 +39,7 @@ export function SearchFilters({ campus, maxMinutes }: SearchFiltersProps) {
           id="search-campus"
           value={campus}
           onChange={(e) => updateParams(e.target.value, maxMinutes)}
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600"
+          className="rounded-md border-2 border-york-blue/30 bg-york-blue/5 px-3 py-2 text-gray-900 transition-colors focus:border-york-red focus:outline-none focus:ring-1 focus:ring-york-red"
         >
           {CAMPUS_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -56,7 +56,7 @@ export function SearchFilters({ campus, maxMinutes }: SearchFiltersProps) {
           id="search-max"
           value={maxMinutes}
           onChange={(e) => updateParams(campus, Number(e.target.value))}
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600"
+          className="rounded-md border-2 border-york-blue/30 bg-york-blue/5 px-3 py-2 text-gray-900 transition-colors focus:border-york-red focus:outline-none focus:ring-1 focus:ring-york-red"
         >
           {MAX_MINUTES_OPTIONS.map((m) => (
             <option key={m} value={m}>
