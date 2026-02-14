@@ -11,8 +11,6 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        "york-red": "#E31837",
-        "york-blue": "#00539B",
       },
     },
   },

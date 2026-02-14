@@ -33,7 +33,7 @@ export function SearchByTime() {
           id="campus"
           value={campus}
           onChange={(e) => setCampus(e.target.value)}
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-york-red focus:outline-none focus:ring-1 focus:ring-york-red"
+          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600"
         >
           {CAMPUS_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -50,7 +50,7 @@ export function SearchByTime() {
           id="maxMinutes"
           value={maxMinutes}
           onChange={(e) => setMaxMinutes(Number(e.target.value))}
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-york-red focus:outline-none focus:ring-1 focus:ring-york-red"
+          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600"
         >
           {MAX_MINUTES_OPTIONS.map((m) => (
             <option key={m} value={m}>
@@ -61,7 +61,7 @@ export function SearchByTime() {
       </div>
       <button
         type="submit"
-        className="rounded-md bg-york-red px-4 py-2 font-medium text-white hover:bg-york-red/90 focus:outline-none focus:ring-2 focus:ring-york-red focus:ring-offset-2"
+        className="rounded-md bg-red-700 px-4 py-2 font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"
       >
         Search
       </button>

@@ -14,7 +14,7 @@ export function ListingCard({ listing, campus }: ListingCardProps) {
     <article className="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
       <h2 className="mb-1 font-semibold text-gray-900">{listing.address}</h2>
       <p className="mb-2 text-sm text-gray-500">{listing.area_name}</p>
-      <p className="mb-3 text-lg font-semibold text-york-red">
+      <p className="mb-3 text-lg font-semibold text-red-700">
         ${listing.rent.toLocaleString()}/mo
       </p>
       <p className="mb-3 text-sm text-gray-700">
@@ -22,17 +22,25 @@ export function ListingCard({ listing, campus }: ListingCardProps) {
       </p>
       <div className="mt-auto flex flex-wrap gap-2">
         <span
-          className="inline-flex items-center rounded-full bg-york-blue/15 px-2.5 py-0.5 text-xs font-medium text-york-blue"
+          className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800"
           title={`Safety: ${listing.safety_label}`}
         >
           Safety {listing.safety_score}/5
         </span>
         <span
-          className="inline-flex items-center rounded-full bg-york-blue/20 px-2.5 py-0.5 text-xs font-medium text-york-blue"
+          className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"
           title={listing.frequency_summary}
         >
           Rel. {listing.reliability_score}/5
         </span>
+        {listing.closest_bus_stop && (
+          <span
+            className="inline-flex max-w-[140px] shrink rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800"
+            title={`Nearest bus stop: ${listing.closest_bus_stop}`}
+          >
+            <span className="truncate">Stop: {listing.closest_bus_stop}</span>
+          </span>
+        )}
       </div>
     </article>
   );

@@ -1,11 +1,11 @@
 "use server";
 
-import { GoogleGenAI } from "@google/genai";
+import OpenAI from "openai";
 import { getListings, type CampusSlug } from "@/data/listings";
 
-function getAI() {
-  return new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-}
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -18,10 +18,10 @@ function parseSearchIntent(text: string): { campus: CampusSlug; maxMinutes: numb
 }
 
 export async function submitChat(messages: ChatMessage[]): Promise<{ content: string; error?: string }> {
-  if (!process.env.GEMINI_API_KEY) {
+  if (!process.env.OPENAI_API_KEY) {
     return {
       content: "",
-      error: "Chat is not configured. Please set GEMINI_API_KEY in .env.local",
+      error: "Chat is not configured. Please set OPENAI_API_KEY.",
     };
   }
 
@@ -31,7 +31,7 @@ export async function submitChat(messages: ChatMessage[]): Promise<{ content: st
 
   let listingsContext = "";
   if (intent) {
-    const results = getListings(intent.campus, intent.maxMinutes);
+    const results = await getListings(intent.campus, intent.maxMinutes);
     if (results.length > 0) {
       listingsContext = `Here are the matching listings (include these links in your reply when suggesting places):\n${results
         .slice(0, 5)
@@ -56,23 +56,17 @@ When the user asks for places (e.g. "find me a place under 30 mins from Markham 
 
 ${listingsContext}`;
 
-  const contents = [
-    { role: "user" as const, parts: [{ text: systemPrompt }] },
-    ...messages.map((m) => ({
-      role: (m.role === "assistant" ? "model" : "user") as "user" | "model",
-      parts: [{ text: m.content }],
-    })),
-  ];
-
   try {
-    const response = await getAI().models.generateContent({
-      model: "gemini-2.0-flash",
-      contents,
-      config: { maxOutputTokens: 500 },
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...messages.map((m) => ({ role: m.role as "user" | "assistant", content: m.content })),
+      ],
+      max_tokens: 500,
     });
 
-    const text = response.text?.trim();
-    const content = text ?? "I couldn't generate a response. Try again.";
+    const content = completion.choices[0]?.message?.content?.trim() ?? "I couldn’t generate a response. Try again.";
     return { content };
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";

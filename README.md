@@ -13,7 +13,9 @@ Transit-oriented housing finder for York University students (Keele & Markham ca
 
 - Next.js 14 (App Router), TypeScript, Tailwind CSS
 - In-code listing data (no database required)
-- Google Gemini for the chat assistant
+- **OpenRouteService** for dynamic travel times (driving) and nearest bus stop (POIs)
+- **Leaflet** for map display (listing + closest bus stop)
+- OpenAI (gpt-4o-mini) for the chat assistant
 
 ## Getting started
 
@@ -33,7 +35,8 @@ cp .env.example .env.local
 
 Edit `.env.local` and set:
 
-- `GEMINI_API_KEY` — from [Google AI Studio](https://aistudio.google.com/apikey)
+- `OPENAI_API_KEY` — from [OpenAI](https://platform.openai.com) (required for Chat)
+- `OPENROUTESERVICE_API_KEY` — from [OpenRouteService](https://openrouteservice.org/dev/#/signup) (required for travel times and closest bus stop; without it, travel data will show as 999 min and no bus stop)
 
 ### 3. Run the dev server
 
@@ -53,7 +56,7 @@ npm start
 ## Deploy on Vercel
 
 1. Push the repo to GitHub and import the project in [Vercel](https://vercel.com).
-2. Add the environment variable `GEMINI_API_KEY` in the Vercel project settings.
+2. Add the environment variable `OPENAI_API_KEY` in the Vercel project settings.
 3. Deploy.
 
 ## Project structure

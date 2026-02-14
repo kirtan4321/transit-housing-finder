@@ -70,7 +70,7 @@ export default function ChatPage() {
         </div>
 
         {error && (
-          <div className="border-t border-york-red/30 bg-york-red/5 px-4 py-2 text-sm text-york-red">
+          <div className="border-t border-red-200 bg-red-50 px-4 py-2 text-sm text-red-800">
             {error}
           </div>
         )}
@@ -84,14 +84,14 @@ export default function ChatPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="e.g. Find me a place under 30 mins from Markham campus"
-            className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-york-red focus:outline-none focus:ring-1 focus:ring-york-red"
+            className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600"
             disabled={loading}
             aria-label="Chat message"
           />
           <button
             type="submit"
             disabled={loading || !input.trim()}
-            className="rounded-md bg-york-red px-4 py-2 font-medium text-white hover:bg-york-red/90 disabled:opacity-50"
+            className="rounded-md bg-red-700 px-4 py-2 font-medium text-white hover:bg-red-800 disabled:opacity-50"
           >
             Send
           </button>

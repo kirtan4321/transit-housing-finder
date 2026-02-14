@@ -19,7 +19,7 @@ function renderContent(content: string) {
       <Link
         key={match.index}
         href={match[2]}
-        className="text-york-red underline hover:text-york-red/90"
+        className="text-red-700 underline hover:text-red-800"
       >
         {match[1]}
       </Link>
@@ -44,7 +44,7 @@ export function ChatMessage({ role, content }: ChatMessageProps) {
       <div
         className={`max-w-[85%] rounded-lg px-4 py-2 ${
           isUser
-            ? "bg-york-red text-white"
+            ? "bg-red-700 text-white"
             : "bg-gray-100 text-gray-900"
         }`}
       >

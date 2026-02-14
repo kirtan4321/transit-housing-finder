@@ -12,7 +12,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const campus = (params.campus === "markham" ? "markham" : "keele") as CampusSlug;
   const maxMinutes = Math.min(60, Math.max(10, parseInt(params.max ?? "25", 10) || 25));
 
-  const results = getListings(campus, maxMinutes);
+  const results = await getListings(campus, maxMinutes);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
