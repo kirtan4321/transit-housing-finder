@@ -48,9 +48,17 @@ export default function ChatPage() {
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col px-4 py-8 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Housing assistant</h1>
+      <h1
+        className="animate-fade-in-up mb-6 text-2xl font-bold text-gray-900 opacity-0"
+        style={{ animationDelay: "0ms" }}
+      >
+        Housing assistant
+      </h1>
 
-      <div className="flex flex-1 flex-col rounded-lg border border-gray-200 bg-white shadow-sm">
+      <div
+        className="animate-fade-in-up flex flex-1 flex-col rounded-lg border border-gray-200 bg-white shadow-sm opacity-0"
+        style={{ animationDelay: "150ms" }}
+      >
         <div className="flex max-h-[60vh] flex-1 flex-col gap-4 overflow-y-auto p-4">
           {messages.map((msg, i) => (
             <ChatMessageComponent
@@ -91,7 +99,7 @@ export default function ChatPage() {
           <button
             type="submit"
             disabled={loading || !input.trim()}
-            className="rounded-md bg-york-red px-4 py-2 font-medium text-white hover:bg-york-red/90 disabled:opacity-50"
+            className="rounded-md bg-york-red px-4 py-2 font-medium text-white transition-colors hover:bg-york-red/90 active:scale-95 disabled:opacity-50"
           >
             Send
           </button>

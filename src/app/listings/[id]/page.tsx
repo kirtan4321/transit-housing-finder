@@ -18,11 +18,15 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <Link
         href="/search"
-        className="mb-6 inline-block text-sm text-york-red hover:underline"
+        className="animate-fade-in-up mb-6 inline-block text-sm text-york-red opacity-0 hover:underline"
+        style={{ animationDelay: "0ms" }}
       >
         ← Back to search
       </Link>
-      <div className="mb-6">
+      <div
+        className="animate-fade-in-up mb-6 opacity-0"
+        style={{ animationDelay: "100ms" }}
+      >
         <h1 className="text-2xl font-bold text-gray-900">{listing.address}</h1>
         <p className="text-gray-500">{listing.area_name}</p>
         <p className="mt-2 text-2xl font-semibold text-red-700">
@@ -30,7 +34,10 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
         </p>
       </div>
 
-      <section className="mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+      <section
+        className="animate-fade-in-up mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm opacity-0"
+        style={{ animationDelay: "200ms" }}
+      >
         <h2 className="mb-3 text-lg font-semibold text-gray-900">
           Time to campus
         </h2>
@@ -47,7 +54,10 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
         </p>
       </section>
 
-      <section className="mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+      <section
+        className="animate-fade-in-up mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm opacity-0"
+        style={{ animationDelay: "350ms" }}
+      >
         <h2 className="mb-3 text-lg font-semibold text-gray-900">
           Safety score
         </h2>
@@ -57,7 +67,10 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
         <p className="text-sm text-gray-600">{listing.safety_label}</p>
       </section>
 
-      <section className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+      <section
+        className="animate-fade-in-up rounded-lg border border-gray-200 bg-white p-6 shadow-sm opacity-0"
+        style={{ animationDelay: "500ms" }}
+      >
         <h2 className="mb-3 text-lg font-semibold text-gray-900">
           Transit reliability
         </h2>

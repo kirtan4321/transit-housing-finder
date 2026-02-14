@@ -9,7 +9,7 @@ export default function ListingNotFound() {
       </p>
       <Link
         href="/search"
-        className="inline-block rounded-md bg-york-red px-4 py-2 font-medium text-white hover:bg-york-red/90"
+        className="inline-block rounded-md bg-york-red px-4 py-2 font-medium text-white transition-colors hover:bg-york-red/90 active:scale-95"
       >
         Back to search
       </Link>

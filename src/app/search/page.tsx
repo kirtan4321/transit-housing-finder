@@ -16,10 +16,20 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Search results</h1>
-      <Suspense fallback={<div className="mb-6 h-20 animate-pulse rounded bg-gray-100" />}>
-        <SearchFilters campus={campus} maxMinutes={maxMinutes} />
-      </Suspense>
+      <h1
+        className="animate-fade-in-up mb-6 text-2xl font-bold text-gray-900 opacity-0"
+        style={{ animationDelay: "0ms" }}
+      >
+        Search results
+      </h1>
+      <div
+        className="animate-fade-in-up opacity-0"
+        style={{ animationDelay: "150ms" }}
+      >
+        <Suspense fallback={<div className="mb-6 h-20 animate-pulse rounded bg-gray-100" />}>
+          <SearchFilters campus={campus} maxMinutes={maxMinutes} />
+        </Suspense>
+      </div>
       <ResultsList listings={results} campus={campus} />
     </div>
   );
