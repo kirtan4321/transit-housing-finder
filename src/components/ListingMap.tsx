@@ -12,6 +12,9 @@ type ListingMapProps = {
   campusLat?: number;
   campusLng?: number;
   campusLabel?: string;
+  /** GeoJSON MultiLineString coordinates from Geoapify routing API.
+   *  When provided, draws the real road-following route instead of a straight line. */
+  routeGeometry?: number[][][] | null;
 };
 
 export function ListingMap({
@@ -23,6 +26,7 @@ export function ListingMap({
   campusLat,
   campusLng,
   campusLabel,
+  routeGeometry,
 }: ListingMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<{ remove: () => void } | null>(null);
@@ -96,31 +100,56 @@ export function ListingMap({
           .addTo(map)
           .bindPopup(campusLabel ?? "Campus");
 
-        // Build waypoints: listing → bus stop (if exists) → campus
-        const waypoints: [number, number][] = [[lat, lng]];
-        if (hasBusStop) {
-          waypoints.push([closestBusStopLat!, closestBusStopLng!]);
-        }
-        waypoints.push([campusLat, campusLng]);
+        // Draw route: prefer real road geometry, fall back to straight line
+        if (routeGeometry && routeGeometry.length > 0) {
+          // Geoapify returns MultiLineString coords as [lng, lat, …elevation]
+          // Leaflet expects [lat, lng], so we swap each coordinate pair.
+          const allRoutePoints: [number, number][] = [];
+          for (const lineCoords of routeGeometry) {
+            const latLngs: [number, number][] = lineCoords.map(
+              (coord) => [coord[1], coord[0]] as [number, number]
+            );
+            allRoutePoints.push(...latLngs);
 
-        // Dashed route line
-        L.default
-          .polyline(waypoints, {
-            color: "#2563eb",
-            weight: 4,
-            opacity: 0.7,
-            dashArray: "10, 8",
-          })
-          .addTo(map);
+            L.default
+              .polyline(latLngs, {
+                color: "#2563eb",
+                weight: 4,
+                opacity: 0.8,
+              })
+              .addTo(map);
+          }
 
-        // Fit bounds to show entire route
-        const allPoints: [number, number][] = [[lat, lng], [campusLat, campusLng]];
-        if (hasBusStop) {
-          allPoints.push([closestBusStopLat!, closestBusStopLng!]);
-        }
-        const bounds = L.default.latLngBounds(allPoints);
-        if (bounds.isValid()) {
-          map.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
+          // Fit bounds to the real route geometry
+          const bounds = L.default.latLngBounds(allRoutePoints);
+          if (bounds.isValid()) {
+            map.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
+          }
+        } else {
+          // Fallback: straight dashed line when no geometry available
+          const waypoints: [number, number][] = [[lat, lng]];
+          if (hasBusStop) {
+            waypoints.push([closestBusStopLat!, closestBusStopLng!]);
+          }
+          waypoints.push([campusLat, campusLng]);
+
+          L.default
+            .polyline(waypoints, {
+              color: "#2563eb",
+              weight: 4,
+              opacity: 0.7,
+              dashArray: "10, 8",
+            })
+            .addTo(map);
+
+          const allPoints: [number, number][] = [[lat, lng], [campusLat, campusLng]];
+          if (hasBusStop) {
+            allPoints.push([closestBusStopLat!, closestBusStopLng!]);
+          }
+          const bounds = L.default.latLngBounds(allPoints);
+          if (bounds.isValid()) {
+            map.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
+          }
         }
       }
 
@@ -143,6 +172,7 @@ export function ListingMap({
     campusLat,
     campusLng,
     campusLabel,
+    routeGeometry,
   ]);
 
   return (

@@ -51,6 +51,10 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
             minutesToKeele={listing.minutes_to_keele}
             minutesToMarkham={listing.minutes_to_markham}
             minutesToGlendon={listing.minutes_to_glendon}
+
+            routeGeometryToKeele={listing.route_geometry_to_keele}
+            routeGeometryToMarkham={listing.route_geometry_to_markham}
+            routeGeometryToGlendon={listing.route_geometry_to_glendon}
           />
         </section>
       )}

@@ -7,6 +7,8 @@ const KEELE_CAMPUS = { lat: 43.7736, lng: -79.5019 };
 const MARKHAM_CAMPUS = { lat: 43.8765, lng: -79.2665 };
 const GLENDON_CAMPUS = { lat: 43.72829, lng: -79.37818 };
 
+type RouteGeometry = number[][][] | null;
+
 type ListingMapWithRouteProps = {
   lat: number;
   lng: number;
@@ -21,6 +23,10 @@ type ListingMapWithRouteProps = {
   minutesToKeele: number;
   minutesToMarkham: number;
   minutesToGlendon: number;
+
+  routeGeometryToKeele?: RouteGeometry;
+  routeGeometryToMarkham?: RouteGeometry;
+  routeGeometryToGlendon?: RouteGeometry;
 };
 
 export function ListingMapWithRoute({
@@ -35,6 +41,9 @@ export function ListingMapWithRoute({
   minutesToKeele,
   minutesToMarkham,
   minutesToGlendon,
+  routeGeometryToKeele,
+  routeGeometryToMarkham,
+  routeGeometryToGlendon,
 }: ListingMapWithRouteProps) {
   const [campus, setCampus] = useState<"keele" | "markham" | "glendon">("keele");
 
@@ -42,6 +51,7 @@ export function ListingMapWithRoute({
   const campusLabel = campus === "keele" ? "Keele Campus" : campus === "markham" ? "Markham Campus" : "Glendon Campus";
   const transitLines = campus === "keele" ? transitLinesToKeele : campus === "markham" ? transitLinesToMarkham : transitLinesToGlendon;
   const minutes = campus === "keele" ? minutesToKeele : campus === "markham" ? minutesToMarkham : minutesToGlendon;
+  const routeGeometry = campus === "keele" ? routeGeometryToKeele : campus === "markham" ? routeGeometryToMarkham : routeGeometryToGlendon;
 
   return (
     <div className="space-y-3">
@@ -72,6 +82,7 @@ export function ListingMapWithRoute({
         campusLat={campusCoords.lat}
         campusLng={campusCoords.lng}
         campusLabel={campusLabel}
+        routeGeometry={routeGeometry}
       />
 
       {transitLines.length > 0 && (
